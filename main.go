@@ -19,14 +19,20 @@ func init() {
 }
 
 func main() {
+	// Create a new Discord session with the necessary intents
 	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
 		return
 	}
 
+	// Enable the GUILD_MEMBERS intent
+	dg.Identify.Intents = discordgo.IntentsGuildMembers
+
+	// Register the event handler for GuildMemberAdd
 	dg.AddHandler(userInfo)
 
+	// Open the WebSocket connection to Discord
 	err = dg.Open()
 	if err != nil {
 		fmt.Println("Error opening connection: ", err)
@@ -42,52 +48,32 @@ func userInfo(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
 	user := member.User
 	createdate, _ := discordgo.SnowflakeTimestamp(user.ID)
 
-	haveAvatar := user.Avatar != ""
+	hasNoAvatar := user.Avatar == ""
 
 	currentTime := time.Now()
 	dif := currentTime.Sub(createdate)
 	accountAge := int(dif.Hours())
 
-	var trigger int
+	var ageDesc string
 	switch {
 	case accountAge < 1:
-		trigger = 1
+		ageDesc = "suspiciously new. Created less than an hour ago"
 	case accountAge < 24:
-		trigger = 2
+		ageDesc = "new. Created less than a day ago"
 	case accountAge < 168:
-		trigger = 3
+		ageDesc = "relatively new. Created less than a week ago"
 	case accountAge < 336:
-		trigger = 4
+		ageDesc = "new. Created less than two weeks ago"
 	default:
-		trigger = 0
+		ageDesc = "old"
 	}
 
-	switch trigger {
-	case 1:
-		if haveAvatar {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is suspiciously new. Created less than an hour ago and has no profile picture.")
-		} else {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is suspiciously new. Created less than an hour ago.")
-		}
-	case 2:
-		if haveAvatar {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is new. Created less than a day ago and has no profile picture.")
-		} else {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is new. Created less than a day ago.")
-		}
-	case 3:
-		if haveAvatar {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is relatively new. Created less than a week ago and has no profile picture.")
-		} else {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is relatively new. Created less than a week ago.")
-		}
-	case 4:
-		if haveAvatar {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is new. Created less than two weeks ago and has no profile picture.")
-		} else {
-			s.ChannelMessageSend(ChannelID, user.Username+"'s account is new. Created less than two weeks ago.")
-		}
-	case 0:
-		s.ChannelMessageSend(ChannelID, user.Username+"'s account is old.")
+	msg := fmt.Sprintf("%s's account is %s", user.Username, ageDesc)
+	if hasNoAvatar {
+		msg += " and has no profile picture"
 	}
+
+	msg += "."
+
+	s.ChannelMessageSend(ChannelID, msg)
 }
