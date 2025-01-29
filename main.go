@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
@@ -10,11 +11,11 @@ import (
 
 var (
 	Token     string
-	ChannelID = "1332105742785708054"
+	ChannelID = os.Getenv("ChannelID")
 )
 
 func init() {
-	flag.StringVar(&Token, "t", "", "Bot Token")
+	flag.StringVar(&Token, "t", "", os.Getenv("Token"))
 	flag.Parse()
 }
 
@@ -65,7 +66,6 @@ func userInfo(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
 	case accountAge < 336:
 		ageDesc = "new. Created less than two weeks ago"
 	default:
-		ageDesc = "old"
 	}
 
 	msg := fmt.Sprintf("%s's account is %s", user.Username, ageDesc)
