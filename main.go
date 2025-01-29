@@ -1,22 +1,27 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
 )
 
 var (
 	Token     string
-	ChannelID = os.Getenv("ChannelID")
+	ChannelID string
 )
 
 func init() {
-	flag.StringVar(&Token, "t", "", os.Getenv("Token"))
-	flag.Parse()
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
+
+	Token = os.Getenv("Token")
+	ChannelID = os.Getenv("ChannelID")
 }
 
 func main() {

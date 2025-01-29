@@ -17,4 +17,9 @@ Helios is a lightweight Discord bot designed to enhance server security by monit
 1. Clone the repository:  
    ```sh
    git clone https://github.com/yourusername/helios.git
-   cd helios
+   cd helios```
+
+2. Create a .env for ```Token``` & ```ChannelID```
+
+3. ```go run main.go```
+
