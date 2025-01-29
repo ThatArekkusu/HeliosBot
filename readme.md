@@ -1,11 +1,20 @@
-Helios is intended as a lightweight user management discord bot
+# Helios - Lightweight Discord User Management Bot  
 
-Intentions:
-Increase server security by monitoring users
+Helios is a lightweight Discord bot designed to enhance server security by monitoring user activity. It helps detect suspicious users and allows for customizable server actions.  
 
-Done:
-Tracking user account date creation and flagging suspicious users to a channel
+## Features  
 
-In progress:
-Customizing variables within discord such as actions on users created within a timeframe
-Action on users
+✅ **Implemented:**  
+- Tracks user account creation dates  
+- Flags suspicious users and reports them to a specified channel  
+
+🛠️ **In Progress:**  
+- Customizable server actions based on user account age  
+- Automated actions on newly created accounts  
+
+## Installation  
+
+1. Clone the repository:  
+   ```sh
+   git clone https://github.com/yourusername/helios.git
+   cd helios
