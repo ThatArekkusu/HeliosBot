@@ -15,6 +15,7 @@ var (
 )
 
 func init() {
+	// Initialise env file and retrieve token and channel id
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -50,15 +51,18 @@ func main() {
 }
 
 func userInfo(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
-	member := m.Member
-	user := member.User
-	createdate, _ := discordgo.SnowflakeTimestamp(user.ID)
 
-	hasNoAvatar := user.Avatar == ""
+	var (
+		member        = m.Member
+		user          = member.User
+		createdate, _ = discordgo.SnowflakeTimestamp(user.ID)
 
-	currentTime := time.Now()
-	dif := currentTime.Sub(createdate)
-	accountAge := int(dif.Hours())
+		hasNoAvatar = user.Avatar == ""
+
+		currentTime = time.Now()
+		dif         = currentTime.Sub(createdate)
+		accountAge  = int(dif.Hours())
+	)
 
 	var ageDesc string
 	switch {
