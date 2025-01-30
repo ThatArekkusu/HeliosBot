@@ -6,11 +6,13 @@ Helios is a lightweight Discord bot designed to enhance server security by monit
 
 ✅ **Implemented:**  
 - Tracks user account creation dates  
-- Flags suspicious users and reports them to a specified channel  
+- Flags suspicious users and reports them to a specified channel 
+- Implemented docker  
 
 🛠️ **In Progress:**  
 - Customizable server actions based on user account age  
-- Automated actions on newly created accounts  
+- Automated actions on newly created accounts 
+- Slash commands
 
 ## Installation  
 
