@@ -1,6 +1,6 @@
 module heliosbot
 
-go 1.23.5
+go 1.20
 
 require (
 	github.com/bwmarrin/discordgo v0.28.1 // indirect
