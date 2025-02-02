@@ -11,13 +11,9 @@ var (
 
 	commands = []*discordgo.ApplicationCommand{
 		{
-			Name:        "BanDate",
+			Name:        "KickDate",
 			Type:        discordgo.ChatApplicationCommand,
 			Description: "Ban a user based on their account creation date",
 		},
 	}
 )
-
-func slash() {
-	// function implementation
-}
